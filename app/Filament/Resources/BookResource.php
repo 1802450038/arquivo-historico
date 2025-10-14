@@ -53,6 +53,11 @@ public static function form(Form $form): Form
                 ->maxSize(5120)
                 ->maxFiles(200)
                 ->columnSpanFull(),
+
+            TextInput::make('book_pdf_file')
+                ->label('PDF Gerado')
+                ->disabled()
+                ->visible(fn ($record) => $record !== null),
         ]);
 }
 

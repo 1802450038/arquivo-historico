@@ -3,8 +3,10 @@
 namespace App\Filament\Resources\BookResource\Pages;
 
 use App\Filament\Resources\BookResource;
+use App\Models\Book;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class EditBook extends EditRecord
 {
