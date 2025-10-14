@@ -39,6 +39,7 @@ class PostResource extends Resource
                     ->maxLength(65535)
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('file')
+                    ->label('Arquivo')
                     ->required()
                     ->placeholder("Adicione o arquivo PDF do livro aqui...")
                     ->acceptedFileTypes(['application/pdf'])

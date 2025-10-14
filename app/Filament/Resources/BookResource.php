@@ -11,6 +11,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 // CORRETO
@@ -29,16 +30,19 @@ public static function form(Form $form): Form
     return $form
         ->schema([
             TextInput::make('title')
+            ->label('Titulo')
                 ->required()
                 ->maxLength(255)
                 ->columnSpanFull(),
 
             ComponentsSpatieMediaLibraryFileUpload::make('images')
+                ->label('Imagens do Livro')
                 ->collection('images') // Mesmo nome da coleção definida no Model
                 ->multiple()          // Permitir múltiplos uploads
                 ->reorderable()         // ✨ HABILITAR A REORDENAÇÃO! ✨
                 ->image()               // Garantir que apenas imagens sejam aceitas
                 ->imageEditor()         // (Opcional) Adicionar um editor básico
+                ->panelLayout('grid')
                 ->columnSpanFull(),
         ]);
 }
@@ -47,8 +51,13 @@ public static function form(Form $form): Form
 {
     return $table
         ->columns([
-            Tables\Columns\TextColumn::make('title')->searchable(),
-            Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable(),
+            Tables\Columns\TextColumn::make('title')->searchable()
+            ->label('Titulo'),
+            Tables\Columns\TextColumn::make('created_at')->since(),
+            Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()
+            ->label('Criado em')->toggleable(isToggledHiddenByDefault: true),
+            Tables\Columns\TextColumn::make('updated_at')->dateTime()->sortable()
+            ->label('Atualizado em')->toggleable(isToggledHiddenByDefault: true),
         ])
         ->filters([
             //
@@ -63,7 +72,7 @@ public static function form(Form $form): Form
                 ->action(function (Book $record) {
                     // 1. Pega todas as mídias da coleção 'images'
                     // A biblioteca já as retorna na ordem correta!
-                    $images = $record->getMedia('images');
+                    $images = $record->getMedia('images')->reverse();
 
                     // 2. Carrega uma view Blade com os dados
                     $pdf = Pdf::loadView('pdf.book', [
