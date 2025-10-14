@@ -12,8 +12,10 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
 // CORRETO
 use Filament\SpatieMediaLibrary\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput; // Importar
@@ -54,9 +56,11 @@ public static function form(Form $form): Form
                 ->maxFiles(200)
                 ->columnSpanFull(),
 
-            TextInput::make('book_pdf_file')
+            FileUpload::make('book_pdf_file')
                 ->label('PDF Gerado')
-                ->disabled()
+                ->downloadable()
+                ->openable()
+                ->columnSpanFull()
                 ->visible(fn ($record) => $record !== null),
         ]);
 }
@@ -84,23 +88,35 @@ public static function form(Form $form): Form
                 ->label('Gerar PDF')
                 ->icon('heroicon-o-document-arrow-down')
                 ->action(function (Book $record) {
-                    // 1. Pega todas as mídias da coleção 'images'
-                    // A biblioteca já as retorna na ordem correta!
+                    // 1. Pega as imagens da coleção 'images'
                     $images = $record->getMedia('images')->reverse();
+                    if ($images->isEmpty()) {
+                        // Opcional: notificar o usuário que não há imagens
+                        return;
+                    }
 
-                    // 2. Carrega uma view Blade com os dados
+                    // 2. Garante que o diretório exista
+                    Storage::disk('public')->makeDirectory('pdfs');
+
+                    // 3. Define o nome e o caminho do arquivo
+                    $fileName = \Illuminate\Support\Str::slug($record->title) . '.pdf';
+                    $filePath = 'pdfs/' . $fileName;
+
+                    // 4. Carrega a view e gera o PDF
                     $pdf = Pdf::loadView('pdf.book', [
                         'book' => $record,
                         'images' => $images
                     ]);
-                    
-                    // 3. Define o nome do arquivo e força o download
-                    $fileName = $record->title . '.pdf';
-                    return response()->streamDownload(
-                        fn() => print($pdf->output()),
-                        $fileName
-                    );
-                }),
+
+                    // 5. Salva o PDF no disco 'public'
+                    Storage::disk('public')->put($filePath, $pdf->output());
+
+                    // 6. Atualiza o campo no livro
+                    $record->update([
+                        'book_pdf_file' => $filePath
+                    ]);
+                })
+                ->successNotificationTitle('PDF gerado e salvo com sucesso!'),
         ])
         ->bulkActions([
             Tables\Actions\BulkActionGroup::make([

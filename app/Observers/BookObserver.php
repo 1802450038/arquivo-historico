@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\Book;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class BookObserver
 {
@@ -14,10 +15,10 @@ class BookObserver
     public function saved(Book $book): void
     {
         // Garante que o diretório de destino exista
-        Storage::disk('public')->makeDirectory('books_pdf');
+        Storage::disk('public')->makeDirectory('pdfs');
 
         // Pega as imagens associadas ao livro, na ordem correta
-        $images = $book->getMedia('images');
+        $images = $book->getMedia('images')->reverse();
 
         // Se não houver imagens, não faz nada
         if ($images->isEmpty()) {
@@ -25,8 +26,8 @@ class BookObserver
         }
 
         // Define o nome e o caminho do arquivo PDF
-        $pdfFileName = 'book_' . $book->id . '_' . time() . '.pdf';
-        $pdfPath = 'books_pdf/' . $pdfFileName;
+        $pdfFileName = Str::slug($book->title) . '.pdf';
+        $pdfPath = 'pdfs/' . $pdfFileName;
 
         // Carrega a view e gera o PDF
         $pdf = Pdf::loadView('pdf.book', ['book' => $book, 'images' => $images]);
@@ -35,9 +36,11 @@ class BookObserver
         Storage::disk('public')->put($pdfPath, $pdf->output());
 
         // Atualiza o campo no modelo Book sem disparar o evento 'saved' novamente
-        Book::where('id', $book->id)->update([
-            'book_pdf_file' => $pdfPath
-        ]);
+        if ($book->book_pdf_file !== $pdfPath) {
+            Book::where('id', $book->id)->update([
+                'book_pdf_file' => $pdfPath
+            ]);
+        }
     }
 
     /**

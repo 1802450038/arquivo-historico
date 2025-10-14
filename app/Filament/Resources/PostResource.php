@@ -48,39 +48,12 @@ class PostResource extends Resource
                     ->required()
                     ->maxLength(65535)
                     ->columnSpanFull(),
-
-                Radio::make('source')
-                    ->label('Fonte do Arquivo')
-                    ->options([
-                        'upload' => 'Fazer upload de arquivo',
-                        'book' => 'Selecionar de um livro existente',
-                    ])
-                    ->default('upload')
-                    ->reactive()
-                    ->afterStateUpdated(function (callable $set, $state) {
-                        if ($state === 'upload') {
-                            $set('book_id', null);
-                        } else {
-                            $set('file', null);
-                        }
-                    }),
-
-                Forms\Components\FileUpload::make('file')
-                    ->label('Arquivo')
-                    ->placeholder("Adicione o arquivo PDF do livro aqui...")
-                    ->acceptedFileTypes(['application/pdf'])
-                    ->downloadable()
-                    ->openable()
-                    ->columnSpanFull()
-                    ->visible(fn (Get $get) => $get('source') === 'upload'),
-
                 Select::make('book_id')
                     ->label('Livro')
                     ->relationship('book', 'title', fn (Builder $query) => $query->whereDoesntHave('post'))
                     ->searchable()
                     ->preload()
-                    ->required(fn (Get $get) => $get('source') === 'book')
-                    ->visible(fn (Get $get) => $get('source') === 'book'),
+                    ->required(),
 
                 Forms\Components\Hidden::make('user_id')
                     ->default(auth()->id())
