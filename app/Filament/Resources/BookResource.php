@@ -23,7 +23,14 @@ class BookResource extends Resource
 {
     protected static ?string $model = Book::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $slug = 'Livros';
+
+    protected static ?string $title = 'Livros';
+
+
+    protected static ?string $navigationIcon = 'heroicon-o-book-open';
+
+    protected static ?string $navigationLabel = 'Livros';
 
 public static function form(Form $form): Form
 {
@@ -43,6 +50,8 @@ public static function form(Form $form): Form
                 ->image()               // Garantir que apenas imagens sejam aceitas
                 ->imageEditor()         // (Opcional) Adicionar um editor básico
                 ->panelLayout('grid')
+                ->maxSize(5120)
+                ->maxFiles(200)
                 ->columnSpanFull(),
         ]);
 }

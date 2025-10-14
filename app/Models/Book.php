@@ -20,4 +20,9 @@ class Book extends Model implements HasMedia
     {
         $this->addMediaCollection('images');
     }
+
+    public function post()
+    {
+        return $this->hasOne(Post::class);
+    }
 }

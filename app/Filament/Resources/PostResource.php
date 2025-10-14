@@ -15,11 +15,21 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Get;
+use Filament\Forms\Components\Select;
+
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-cursor-arrow-rays';
+
+    protected static ?string $slug = 'Postagens';
+
+    protected static ?string $title = 'Postagens';
+
+    protected static ?string $navigationLabel = 'Postagens';
 
     public static function form(Form $form): Form
     {
@@ -38,14 +48,40 @@ class PostResource extends Resource
                     ->required()
                     ->maxLength(65535)
                     ->columnSpanFull(),
+
+                Radio::make('source')
+                    ->label('Fonte do Arquivo')
+                    ->options([
+                        'upload' => 'Fazer upload de arquivo',
+                        'book' => 'Selecionar de um livro existente',
+                    ])
+                    ->default('upload')
+                    ->reactive()
+                    ->afterStateUpdated(function (callable $set, $state) {
+                        if ($state === 'upload') {
+                            $set('book_id', null);
+                        } else {
+                            $set('file', null);
+                        }
+                    }),
+
                 Forms\Components\FileUpload::make('file')
                     ->label('Arquivo')
-                    ->required()
                     ->placeholder("Adicione o arquivo PDF do livro aqui...")
                     ->acceptedFileTypes(['application/pdf'])
                     ->downloadable()
                     ->openable()
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->visible(fn (Get $get) => $get('source') === 'upload'),
+
+                Select::make('book_id')
+                    ->label('Livro')
+                    ->relationship('book', 'title', fn (Builder $query) => $query->whereDoesntHave('post'))
+                    ->searchable()
+                    ->preload()
+                    ->required(fn (Get $get) => $get('source') === 'book')
+                    ->visible(fn (Get $get) => $get('source') === 'book'),
+
                 Forms\Components\Hidden::make('user_id')
                     ->default(auth()->id())
                     ->required(),
@@ -62,13 +98,23 @@ class PostResource extends Resource
                 Tables\Columns\TextColumn::make('post_legend')
                     ->label('Legenda')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('body')
                     ->label('Texto')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('file')
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->label('Arquivo')
-                    ->searchable(),
+                    ->searchable()
+                    ->limit(50),
+
+                Tables\Columns\TextColumn::make('source')
+                    ->label('Fonte')
+                    ->state(function (\App\Models\Post $record): string {
+                        return $record->file ?? $record->book?->title ?? 'N/A';
+                    })
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query
+                            ->where('file', 'like', "%{$search}%")
+                            ->orWhereHas('book', fn (Builder $q) => $q->where('title', 'like', "%{$search}%"));
+                    }),
+
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Autor')
                     ->searchable()
