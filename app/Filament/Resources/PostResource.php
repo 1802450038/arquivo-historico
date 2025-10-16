@@ -54,7 +54,6 @@ class PostResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
-
                 Forms\Components\Hidden::make('user_id')
                     ->default(auth()->id())
                     ->required(),
