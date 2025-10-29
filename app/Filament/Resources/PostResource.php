@@ -40,7 +40,7 @@ class PostResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('post_legend')
-                    ->label('Legenda')
+                    ->label('Resumo')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\RichEditor::make('body')

@@ -49,20 +49,20 @@ class BookResource extends Resource
 
                 Tabs::make('Método de envio do arquivo ')
                     ->tabs([
-                        Tabs\Tab::make('Upload de Imagens')->schema([
-                            ComponentsSpatieMediaLibraryFileUpload::make('images')
-                                ->label('Imagens do Livro')
-                                ->collection('images') // Mesmo nome da coleção definida no Model
-                                ->multiple()          // Permitir múltiplos uploads
-                                ->reorderable()         // ✨ HABILITAR A REORDENAÇÃO! ✨
-                                ->image()               // Garantir que apenas imagens sejam aceitas
-                                ->imageEditor()         // (Opcional) Adicionar um editor básico
-                                ->panelLayout('grid')
-                                ->maxSize(5120)
-                                ->maxFiles(200)
-                                ->columnSpanFull(),
+                    //     Tabs\Tab::make('Upload de Imagens')->schema([
+                    //         ComponentsSpatieMediaLibraryFileUpload::make('images')
+                    //             ->label('Imagens do Livro')
+                    //             ->collection('images') // Mesmo nome da coleção definida no Model
+                    //             ->multiple()          // Permitir múltiplos uploads
+                    //             ->reorderable()         // ✨ HABILITAR A REORDENAÇÃO! ✨
+                    //             ->image()               // Garantir que apenas imagens sejam aceitas
+                    //             ->imageEditor()         // (Opcional) Adicionar um editor básico
+                    //             ->panelLayout('grid')
+                    //             ->maxSize(102400)
+                    //             ->maxFiles(200)
+                    //             ->columnSpanFull(),
 
-                        ]),
+                    //     ]),
                         Tabs\Tab::make('Enviar PDF Pronto')
                             ->schema([
                                 FileUpload::make('book_pdf_file')
