@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 use Filament\Forms\Components\Radio;
+use Illuminate\Support\Str;
 use Filament\Forms\Get;
 use Filament\Forms\Components\Select;
 
@@ -48,12 +49,17 @@ class PostResource extends Resource
                     ->required()
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Select::make('book_id')
-                    ->label('Livro')
-                    ->relationship('book', 'title', fn (Builder $query) => $query->whereDoesntHave('post'))
-                    ->searchable()
-                    ->preload()
-                    ->required(),
+                Forms\Components\FileUpload::make('file')
+                    ->label('Arquivo')
+                    ->directory('posts')
+                    ->columnSpanFull()
+                    ->openable()
+                    ->disk('public')
+                    ->directory('posts_files')
+                    ->acceptedFileTypes(['application/pdf'])
+                    ->getUploadedFileNameForStorageUsing(fn(Get $get) => Str::slug($get('title')) . '.pdf')
+                    ->uploadingMessage('Enviando arquivo PDF...')
+                    ->downloadable(),
                 Forms\Components\Hidden::make('user_id')
                     ->default(auth()->id())
                     ->required(),

@@ -5,7 +5,7 @@
 Acesse seu servidor via SSH e clone o projeto
 
 ``` 
-    git clone https://github.com/1802450038/arquivo-historico.git
+git clone https://github.com/1802450038/arquivo-historico.git
 ``` 
 
 ### 2 Definir permissões

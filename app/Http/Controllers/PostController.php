@@ -15,7 +15,7 @@ class PostController extends Controller
 
     public function show($id){
         $post = post::with('book')->find($id);
-        $post->file = $post->book->book_pdf_file;
+        // $post->file = $post->book->book_pdf_file;
         return view('bookDetails', ['post'=> $post]);
     }
 }
