@@ -90,7 +90,7 @@ def criar_pdf_de_imagens(pasta_imagens, nome_arquivo_saida):
 # 1. Coloque o caminho para a sua pasta de imagens aqui
 #    Exemplo no Windows: "C:\\Users\\SeuUsuario\\Desktop\\MinhasImagens"
 #    Exemplo no Linux/Mac: "/home/seu_usuario/imagens"
-pasta_com_imagens = "/Users/gabrielbellagamba/Desktop/arquivo_filament/conversor_pdf_python/arquivo_files_historico/Termos de juramento"
+# pasta_com_imagens = "/Users/gabrielbellagamba/Desktop/arquivo_filament/conversor_pdf_python/arquivo_files_historico/Termos de juramento"
 
 # 2. Defina o nome que você quer para o arquivo PDF de saída
 # nome_do_pdf = "Ata das Sessões da Câmara Municipal da Vila de Uruguaiana 1867 a 1871.pdf"
@@ -112,7 +112,7 @@ pasta_com_imagens = "/Users/gabrielbellagamba/Desktop/arquivo_filament/conversor
 # nome_do_pdf = "Termos de Arrematação, Fiança e Outros Contratos da Câmara Municipal de Uruguaiana 1855 a 1886.pdf"
 # nome_do_pdf = "Termos de Audiências da Delegacia da Villa de Uruguaiana 1858 a 1877.pdf"
 # nome_do_pdf = "Termos de Balanços de Verificação no Cofre da Câmara Municipal 1858 a 1870.pdf"
-nome_do_pdf = "Termos de Juramento dos Empregados Municipais no Conselho Municipal e Intendentes do Município 1885 a 1928.pdf"
+# nome_do_pdf = "Termos de Juramento dos Empregados Municipais no Conselho Municipal e Intendentes do Município 1885 a 1928.pdf"
 
 # 3. Executa a função
-criar_pdf_de_imagens(pasta_com_imagens, nome_do_pdf)
+# criar_pdf_de_imagens(pasta_com_imagens, nome_do_pdf)
