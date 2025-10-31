@@ -80,10 +80,11 @@ Em url rewrite selecione laravel5
 
 No nginx vode deve publicar os assets das views pois o mesmo não encontra por padrão. Ou seja, toda alteração que fizer no projeto deve executar os seguintes comandos.
 
-```
-php artisan vendor:publish --tag=livewire:assets --force
-```
 
 ``` 
 php artisan optimize:clear
 ``` 
+
+```
+php artisan vendor:publish --tag=livewire:assets --force
+```
