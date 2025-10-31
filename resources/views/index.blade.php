@@ -59,8 +59,8 @@
 
             @foreach ($posts as $post)
                   <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-1 transition-transform duration-300 flex flex-col">
-                <div class="w-full h-56 flex items-center justify-center p-4 bg-[#a1887f]">
-                    <h4 class="font-lora text-2xl text-center text-white">{{$post->title}}</h4>
+                <div class="w-full h-60 flex items-center justify-center p-4 bg-[#a1887f]">
+                    <h4 class="font-lora text-center text-white" style="font-size: 1.3rem">{{$post->title}}</h4>
                 </div>
                 <div class="p-4 flex flex-col flex-grow">
                     <p class="text-sm  text-lg mb-2 text-stone-800 truncate">{{$post->post_legend}}</p>
