@@ -27,8 +27,10 @@ def comprimir_pdf(arquivo_entrada, arquivo_saida, nivel_qualidade=2):
     }
 
     # Comando base do Ghostscript
+    # 'gs for linux and unix'
+    # gswin64c for windows
     comando = [
-        'gs',
+        'gswin64c',
         '-sDEVICE=pdfwrite',
         '-dCompatibilityLevel=1.4',
         f'-dPDFSETTINGS={qualidades.get(nivel_qualidade, "/default")}',
@@ -60,17 +62,3 @@ def comprimir_pdf(arquivo_entrada, arquivo_saida, nivel_qualidade=2):
     except Exception as e:
         print(f"Ocorreu um erro inesperado: {e}")
 
-# nome_do_pdf = "./PDFS/Termos de Juramento dos Empregados Municipais no Conselho Municipal e Intendentes do Município 1885 a 1928.pdf"
-
-
-# pdf_comprimido = nome_do_pdf.split('/')[-1].split('.pdf')[0] + "_comprimido.pdf"
-# 3. Escolha o nível de qualidade (leia a explicação abaixo)
-#    0: Qualidade de tela (menor arquivo, ideal para web/email)
-#    1: Qualidade de eBook (ótimo equilíbrio entre tamanho e qualidade)
-#    2: Qualidade de Impressão (para imprimir em casa/escritório)
-#    3: Qualidade de Pré-impressão (para gráficas profissionais)
-#    Recomendação: comece com 1 (ebook) e veja o resultado.
-# qualidade = 1
-
-
-# comprimir_pdf(nome_do_pdf, pdf_comprimido, qualidade)

@@ -85,34 +85,3 @@ def criar_pdf_de_imagens(pasta_imagens, nome_arquivo_saida):
     c.save()
     print(f"\nPDF '{nome_arquivo_saida}' criado com sucesso com {len(arquivos_imagem)} páginas!")
 
-# --- COMO USAR O SCRIPT ---
-
-# 1. Coloque o caminho para a sua pasta de imagens aqui
-#    Exemplo no Windows: "C:\\Users\\SeuUsuario\\Desktop\\MinhasImagens"
-#    Exemplo no Linux/Mac: "/home/seu_usuario/imagens"
-# pasta_com_imagens = "/Users/gabrielbellagamba/Desktop/arquivo_filament/conversor_pdf_python/arquivo_files_historico/Termos de juramento"
-
-# 2. Defina o nome que você quer para o arquivo PDF de saída
-# nome_do_pdf = "Ata das Sessões da Câmara Municipal da Vila de Uruguaiana 1867 a 1871.pdf"
-# nome_do_pdf = "Atas de Exames nas Escolas Municipais 1893.pdf"
-# nome_do_pdf = "Atas de Exames nas Escolas Municipais 1895.pdf"
-# nome_do_pdf = "Carta de Sesmaria 1823.pdf"
-# nome_do_pdf = "Contrato de Professores da Instrução Pública de 1883 a 1889.pdf"
-# nome_do_pdf = "Correspondências da Intendência de Uruguaiana e Junta Revolucionária 1890 a 1891.pdf"
-# nome_do_pdf = "Inventário dos Objetos de Utensílios das Aulas Públicas (sexo feminino) 1876 a 1880.pdf"
-# nome_do_pdf = "Juramento dos Empregados Públicos da Câmara Municipal Vila de Uruguaiana 1847 até 1885.pdf"
-# nome_do_pdf = "Juramento dos Empregados Públicos Câmara Municipal - Vila de Uruguaiana 1847 a 1885.pdf"
-# nome_do_pdf = "Lançamento dos Balanços e Orçamentos da Câmara Municipal a Assembleia Provincial 1853 a 1859.pdf"
-# nome_do_pdf = "Folha de Pagamento dos Funcionários Municipais 1920 a 1921.pdf"
-# nome_do_pdf = "Registros de Títulos e Nomeações dos Empregados Públicos de Uruguaiana 1847 a 1889.pdf"
-# nome_do_pdf = "Registro dos Terrenos concedidos pela Câmara Municipal e outras autoridades 1861.pdf"
-# nome_do_pdf = "Registros de Inventários 1893 a 1921.pdf"
-# nome_do_pdf = "Termo de Responsabilidade e Fiança para estabelecer Casas de Jogos e Hotéis em Uruguaiana.pdf"
-# nome_do_pdf = "Termos de Visita à Cadeia Pública pelo Delegado de Polícia de Uruguaiana.pdf"
-# nome_do_pdf = "Termos de Arrematação, Fiança e Outros Contratos da Câmara Municipal de Uruguaiana 1855 a 1886.pdf"
-# nome_do_pdf = "Termos de Audiências da Delegacia da Villa de Uruguaiana 1858 a 1877.pdf"
-# nome_do_pdf = "Termos de Balanços de Verificação no Cofre da Câmara Municipal 1858 a 1870.pdf"
-# nome_do_pdf = "Termos de Juramento dos Empregados Municipais no Conselho Municipal e Intendentes do Município 1885 a 1928.pdf"
-
-# 3. Executa a função
-# criar_pdf_de_imagens(pasta_com_imagens, nome_do_pdf)

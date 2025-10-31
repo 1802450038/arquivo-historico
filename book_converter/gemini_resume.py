@@ -1,6 +1,6 @@
 import google.generativeai as genai
 import os
-import load_dotenv
+from dotenv import load_dotenv
 import time
 import book_pdf
 import pdf_make
@@ -13,7 +13,7 @@ def configurar_e_listar():
     """
     try:
         # Carrega a chave de API do arquivo .env
-        load_dotenv.load_dotenv()
+        load_dotenv()
         api_key = os.getenv("GOOGLE_API_KEY")
         
         if not api_key:
@@ -57,7 +57,7 @@ def configurar_gemini():
     Carrega a chave de API do arquivo .env e configura o cliente Gemini.
     """
     # Carrega as variáveis de ambiente do arquivo .env
-    load_dotenv.load_dotenv()
+    load_dotenv()
     
     api_key = os.getenv("GOOGLE_API_KEY")
     if not api_key:

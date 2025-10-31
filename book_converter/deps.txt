@@ -1,0 +1,8 @@
+pip install google-generativeai
+pip install python-dotenv
+pip install Pillow
+pip install reportlab
+pip install pyinstaller
+
+python -m pip install python-dotenv
+python -m pip install --no-cache-dir --force-reinstall python-dotenv pyinstaller google-generativeai
