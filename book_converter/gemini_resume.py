@@ -13,8 +13,10 @@ def configurar_e_listar():
     """
     try:
         # Carrega a chave de API do arquivo .env
-        load_dotenv()
-        api_key = os.getenv("GOOGLE_API_KEY")
+        # load_dotenv()
+        # api_key = os.getenv("GOOGLE_API_KEY")
+        api_key = "AIzaSyCOEPtwL45MvzmV8oC71802450038gNmUixAczSzNttU"
+
         
         if not api_key:
             print("Erro: Chave de API não encontrada no arquivo .env.")
@@ -57,9 +59,10 @@ def configurar_gemini():
     Carrega a chave de API do arquivo .env e configura o cliente Gemini.
     """
     # Carrega as variáveis de ambiente do arquivo .env
-    load_dotenv()
+    # load_dotenv()
     
-    api_key = os.getenv("GOOGLE_API_KEY")
+    # api_key = os.getenv("GOOGLE_API_KEY")
+    api_key = "AIzaSyCOEPtwL45MvzmV8oC71802450038gNmUixAczSzNttU"
     if not api_key:
         raise ValueError("Chave de API não encontrada. Verifique seu arquivo .env")
         
